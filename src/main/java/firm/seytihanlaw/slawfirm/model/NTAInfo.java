@@ -1,5 +1,16 @@
 package firm.seytihanlaw.slawfirm.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.*;
+
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class NTAInfo {
 
     private String locationOfEntry;
@@ -8,37 +19,4 @@ public class NTAInfo {
 
     private String ntaDate;
 
-    public NTAInfo() {
-
-    }
-
-    public NTAInfo(String locationOfEntry, String dateOfEntry, String ntaDate) {
-        this.locationOfEntry = locationOfEntry;
-        this.dateOfEntry = dateOfEntry;
-        this.ntaDate = ntaDate;
-    }
-
-    public String getLocationOfEntry() {
-        return locationOfEntry;
-    }
-
-    public void setLocationOfEntry(String locationOfEntry) {
-        this.locationOfEntry = locationOfEntry;
-    }
-
-    public String getDateOfEntry() {
-        return dateOfEntry;
-    }
-
-    public void setDateOfEntry(String dateOfEntry) {
-        this.dateOfEntry = dateOfEntry;
-    }
-
-    public String getNtaDate() {
-        return ntaDate;
-    }
-
-    public void setNtaDate(String ntaDate) {
-        this.ntaDate = ntaDate;
-    }
 }
