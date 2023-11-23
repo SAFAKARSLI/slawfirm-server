@@ -1,8 +1,6 @@
-package firm.seytihanlaw.slawfirm.model;
+package firm.seytihanlaw.slawfirm.model.request;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import firm.seytihanlaw.slawfirm.types.ATTORNEY;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

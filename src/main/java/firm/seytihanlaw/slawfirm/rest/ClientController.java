@@ -1,9 +1,9 @@
 package firm.seytihanlaw.slawfirm.rest;
 
 import firm.seytihanlaw.slawfirm.model.Client;
-import firm.seytihanlaw.slawfirm.model.ClientCreateRequestModel;
-import firm.seytihanlaw.slawfirm.model.ClientCreateResponseModel;
-import firm.seytihanlaw.slawfirm.model.ClientUpdateRequestModel;
+import firm.seytihanlaw.slawfirm.model.request.ClientCreateRequestModel;
+import firm.seytihanlaw.slawfirm.model.response.ClientCreateResponseModel;
+import firm.seytihanlaw.slawfirm.model.request.ClientUpdateRequestModel;
 import firm.seytihanlaw.slawfirm.services.ClientService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;

@@ -1,6 +1,6 @@
 package firm.seytihanlaw.slawfirm.rest;
 
-import firm.seytihanlaw.slawfirm.model.GenerateDocumentRequestModel;
+import firm.seytihanlaw.slawfirm.model.request.GenerateDocumentRequestModel;
 import firm.seytihanlaw.slawfirm.services.DocumentService;
 import firm.seytihanlaw.slawfirm.util.GenericFileManager;
 import lombok.extern.slf4j.Slf4j;
@@ -9,31 +9,27 @@ import org.apache.poi.xwpf.usermodel.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
+import java.util.UUID;
 
 @Slf4j
 @RestController
 @RequestMapping("clients/{client_id}/generate")
 public class GenerateController {
 
-    private final GenericFileManager fileLoader;
+    private final GenericFileManager fileManager;
     private final DocumentService documentService;
 
     public GenerateController(GenericFileManager fileLoader, DocumentService documentService) {
-        this.fileLoader = fileLoader;
+        this.fileManager = fileLoader;
         this.documentService = documentService;
     }
 
-    @RequestMapping(value = "/written-plea", method = RequestMethod.GET, produces="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-    public @ResponseBody byte[] generateWrittenPlea(@RequestBody GenerateDocumentRequestModel documentRequestModel) throws IOException {
-
-        File file = fileLoader.getPlea().getFile();
-        InputStream fis = new FileInputStream(file);
-        XWPFDocument docx = new XWPFDocument(fis);
-
-        log.info(documentRequestModel.getGenerics().get("file_id"));
+    @RequestMapping(value = "/written-plea",
+            method = RequestMethod.GET, produces="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+    public @ResponseBody byte[] handleGenerate(@RequestBody GenerateDocumentRequestModel documentRequestModel) throws IOException {
 
         return IOUtils.toByteArray(
-                new FileInputStream(documentService.handleGenerics(documentRequestModel.getGenerics(), docx))
+                new FileInputStream(documentService.handleGenerics(documentRequestModel.getGenerics(), UUID.fromString(documentRequestModel.getFile_id())))
         );
 
     }

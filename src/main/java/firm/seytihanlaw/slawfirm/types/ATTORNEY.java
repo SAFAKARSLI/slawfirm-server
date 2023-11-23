@@ -1,4 +1,4 @@
-package firm.seytihanlaw.slawfirm.model;
+package firm.seytihanlaw.slawfirm.types;
 
 public enum ATTORNEY {
     AHMET_SEYITHANOGLU("AHMET_SEYITHANOGLU"),

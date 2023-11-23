@@ -13,7 +13,7 @@ import lombok.*;
 @Setter
 public class NTAInfo {
 
-    private String locationOfEntry;
+    private String placeOfEntry;
 
     private String dateOfEntry;
 

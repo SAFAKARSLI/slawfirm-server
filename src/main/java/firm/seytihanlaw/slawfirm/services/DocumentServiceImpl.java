@@ -1,27 +1,37 @@
 package firm.seytihanlaw.slawfirm.services;
 
+import firm.seytihanlaw.slawfirm.repo.DocumentRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.xwpf.usermodel.*;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Component
 public class DocumentServiceImpl implements DocumentService {
 
+    private final DocumentRepository documentRepository;
+
+    public DocumentServiceImpl(DocumentRepository documentRepository) {
+        this.documentRepository = documentRepository;
+    }
 
 
     @Override
-    public File handleGenerics(Map<String, String> generics, XWPFDocument docx) {
+    public File handleGenerics(Map<String, String> generics, UUID fileId) {
+
+        InputStream fis = new ByteArrayInputStream(documentRepository.findById(fileId).get().getFileContent());
+        XWPFDocument docx;
+        try {
+            docx = new XWPFDocument(fis);
+        } catch (IOException e) {
+            throw new RuntimeException("Specified document (UUID: "+ fileId +") could not be found.");
+        }
+
 
         Iterator<XWPFParagraph> paragraph_itr = docx.getParagraphsIterator();
 

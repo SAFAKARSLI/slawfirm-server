@@ -1,10 +1,8 @@
 package firm.seytihanlaw.slawfirm.services;
 
 import firm.seytihanlaw.slawfirm.model.Client;
-import firm.seytihanlaw.slawfirm.model.ClientCreateRequestModel;
-import firm.seytihanlaw.slawfirm.model.ClientCreateResponseModel;
-import firm.seytihanlaw.slawfirm.model.ClientUpdateRequestModel;
-import org.springframework.stereotype.Service;
+import firm.seytihanlaw.slawfirm.model.response.ClientCreateResponseModel;
+import firm.seytihanlaw.slawfirm.model.request.ClientUpdateRequestModel;
 
 import java.util.Optional;
 import java.util.Set;

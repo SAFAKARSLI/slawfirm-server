@@ -1,5 +1,6 @@
 package firm.seytihanlaw.slawfirm.model;
 
+import firm.seytihanlaw.slawfirm.types.ATTORNEY;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -36,8 +37,6 @@ public class Client {
 
     private String email;
 
-//    private Case caseInfo = new Case();
-//    private NTAInfo nta;
 
     @Override
     public String toString() {

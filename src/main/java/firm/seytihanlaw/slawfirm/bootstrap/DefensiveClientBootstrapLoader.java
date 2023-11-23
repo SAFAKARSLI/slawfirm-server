@@ -1,6 +1,6 @@
-package firm.seytihanlaw.slawfirm.util;
+package firm.seytihanlaw.slawfirm.bootstrap;
 
-import firm.seytihanlaw.slawfirm.model.ATTORNEY;
+import firm.seytihanlaw.slawfirm.types.ATTORNEY;
 import firm.seytihanlaw.slawfirm.model.Client;
 import firm.seytihanlaw.slawfirm.repo.ClientRepository;
 import org.apache.poi.ss.usermodel.Row;
@@ -15,14 +15,14 @@ import java.io.FileInputStream;
 import java.util.Iterator;
 
 @Component
-public class DefensiveClientDataLoader implements CommandLineRunner {
+public class DefensiveClientBootstrapLoader implements CommandLineRunner {
 
     ClientRepository clientRepository;
 
     @Value("classpath:static/Slawfirm_Defensive_Clients.xlsx")
     Resource resource;
 
-    public DefensiveClientDataLoader(ClientRepository clientRepository) {
+    public DefensiveClientBootstrapLoader(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
     }
 

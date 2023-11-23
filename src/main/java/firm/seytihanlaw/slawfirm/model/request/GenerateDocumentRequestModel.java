@@ -1,4 +1,4 @@
-package firm.seytihanlaw.slawfirm.model;
+package firm.seytihanlaw.slawfirm.model.request;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import lombok.*;
