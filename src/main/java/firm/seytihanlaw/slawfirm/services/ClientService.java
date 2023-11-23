@@ -1,21 +1,18 @@
 package firm.seytihanlaw.slawfirm.services;
 
-import firm.seytihanlaw.slawfirm.model.Client;
-import firm.seytihanlaw.slawfirm.model.response.ClientCreateResponseModel;
-import firm.seytihanlaw.slawfirm.model.request.ClientUpdateRequestModel;
+import firm.seytihanlaw.slawfirm.model.dto.ClientDto;
 
-import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 
 public interface ClientService {
 
-    Set<Client> getClients();
-
-    Optional<Client> findClientById(Long client_id);
-
-    ClientCreateResponseModel createClient(Client client);
-
-    void findAndUpdateClient(Long client_id, ClientUpdateRequestModel client);
+    Set<ClientDto> getClients();
+    ClientDto findClientById(UUID client_id);
+    ClientDto saveClient(ClientDto client);
+    void findAndUpdateClient(UUID client_id, ClientDto updateClientInfo);
+    void updateNtaInfo(UUID client_id, UUID nta_id);
+    void updateCaseInfo(UUID client_id, UUID case_id);
 
 }

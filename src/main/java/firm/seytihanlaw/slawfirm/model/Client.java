@@ -1,12 +1,13 @@
 package firm.seytihanlaw.slawfirm.model;
 
 import firm.seytihanlaw.slawfirm.types.ATTORNEY;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import firm.seytihanlaw.slawfirm.types.GENDER;
+import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
+import java.util.Objects;
+import java.util.UUID;
 
 
 @Getter
@@ -18,25 +19,34 @@ import lombok.*;
 public class Client {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(unique = true)
+    private UUID id;
 
     private String fullName;
 
     private String alienNumber;
 
+    private GENDER gender;
+
     private Integer payment;
 
     private Integer balance;
 
+    @Enumerated(EnumType.STRING)
     private ATTORNEY responsible;
 
     private String phoneNumber;
 
-    private String fileDate;
-
     private String email;
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "nta_id", referencedColumnName = "ntaId")
+    private NtaInfo ntaInfo;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "case_id", referencedColumnName = "caseId")
+    private CaseInfo caseInfo;
 
     @Override
     public String toString() {
@@ -44,12 +54,28 @@ public class Client {
                 "id=" + id +
                 ", fullName='" + fullName + '\'' +
                 ", alienNumber='" + alienNumber + '\'' +
+                ", gender=" + gender +
                 ", payment=" + payment +
                 ", balance=" + balance +
                 ", responsible=" + responsible +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", fileDate='" + fileDate + '\'' +
                 ", email='" + email + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Client client = (Client) o;
+
+        return Objects.equals(id, client.id);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }

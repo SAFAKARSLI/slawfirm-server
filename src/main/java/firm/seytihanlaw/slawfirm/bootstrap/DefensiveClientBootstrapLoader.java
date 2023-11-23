@@ -36,12 +36,10 @@ public class DefensiveClientBootstrapLoader implements CommandLineRunner {
         XSSFSheet ws = wb.getSheetAt(0);
         Iterator<Row> rowIterator = ws.iterator();
 
-        System.out.println(ws.getLastRowNum());
         for(int i = 1; i< ws.getLastRowNum(); i++) {
 
             Row row = ws.getRow(i);
 
-            System.out.println(row.getCell(0));
 
             ATTORNEY responsible = switch (row.getCell(4).toString()) {
                 case "AHMET" -> ATTORNEY.AHMET_SEYITHANOGLU;
@@ -61,17 +59,16 @@ public class DefensiveClientBootstrapLoader implements CommandLineRunner {
                     .alienNumber(String.valueOf(row.getCell(1)))
                     .responsible(responsible)
                     .phoneNumber(String.valueOf(row.getCell(5)))
-                    .fileDate(String.valueOf(row.getCell(6)))
                     .email(String.valueOf(row.getCell(7)))
                     .build();
 
             if (String.valueOf(row.getCell(2)).isEmpty()) {
-                client.builder().payment(0);
-            } else client.builder().payment(Integer.valueOf(String.valueOf(row.getCell(2)).split("\\.")[0]));
+                client.setPayment(0);
+            } else client.setPayment(Integer.valueOf(String.valueOf(row.getCell(2)).split("\\.")[0]));
 
             if (row.getCell(3).toString().isEmpty()) {
-                client.builder().balance(0);
-            } else client.builder().balance(Integer.valueOf(String.valueOf(row.getCell(3)).split("\\.")[0]));
+                client.setBalance(0);
+            } else client.setBalance(Integer.valueOf(String.valueOf(row.getCell(3)).split("\\.")[0]));
 
             clientRepository.save(client);
         }

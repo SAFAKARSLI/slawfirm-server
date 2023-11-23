@@ -1,18 +1,18 @@
-package firm.seytihanlaw.slawfirm.model.request;
+package firm.seytihanlaw.slawfirm.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.UUID;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class GenerateDocumentRequestModel {
+public class DocumentDto {
 
     private String file_id;
 

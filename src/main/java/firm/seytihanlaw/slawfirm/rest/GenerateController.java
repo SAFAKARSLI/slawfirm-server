@@ -1,11 +1,10 @@
 package firm.seytihanlaw.slawfirm.rest;
 
-import firm.seytihanlaw.slawfirm.model.request.GenerateDocumentRequestModel;
+import firm.seytihanlaw.slawfirm.model.dto.DocumentDto;
 import firm.seytihanlaw.slawfirm.services.DocumentService;
 import firm.seytihanlaw.slawfirm.util.GenericFileManager;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
-import org.apache.poi.xwpf.usermodel.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
@@ -24,9 +23,9 @@ public class GenerateController {
         this.documentService = documentService;
     }
 
-    @RequestMapping(value = "/written-plea",
+    @RequestMapping(
             method = RequestMethod.GET, produces="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-    public @ResponseBody byte[] handleGenerate(@RequestBody GenerateDocumentRequestModel documentRequestModel) throws IOException {
+    public @ResponseBody byte[] handleGenerate(@RequestBody DocumentDto documentRequestModel) throws IOException {
 
         return IOUtils.toByteArray(
                 new FileInputStream(documentService.handleGenerics(documentRequestModel.getGenerics(), UUID.fromString(documentRequestModel.getFile_id())))
