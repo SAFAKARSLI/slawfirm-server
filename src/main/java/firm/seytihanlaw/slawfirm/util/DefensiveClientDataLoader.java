@@ -15,14 +15,14 @@ import java.io.FileInputStream;
 import java.util.Iterator;
 
 @Component
-public class SlawfirmClientDataLoader implements CommandLineRunner {
+public class DefensiveClientDataLoader implements CommandLineRunner {
 
     ClientRepository clientRepository;
 
     @Value("classpath:static/Slawfirm_Defensive_Clients.xlsx")
     Resource resource;
 
-    public SlawfirmClientDataLoader(ClientRepository clientRepository) {
+    public DefensiveClientDataLoader(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
     }
 

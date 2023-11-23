@@ -1,22 +1,17 @@
 package firm.seytihanlaw.slawfirm.rest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import firm.seytihanlaw.slawfirm.model.Client;
 import firm.seytihanlaw.slawfirm.model.ClientCreateRequestModel;
 import firm.seytihanlaw.slawfirm.model.ClientCreateResponseModel;
 import firm.seytihanlaw.slawfirm.model.ClientUpdateRequestModel;
-import firm.seytihanlaw.slawfirm.repo.ClientRepository;
 import firm.seytihanlaw.slawfirm.services.ClientService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.DataInput;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.Set;
@@ -24,11 +19,11 @@ import java.util.Set;
 @Slf4j
 @RestController
 @RequestMapping("clients")
-public class SlawfirmBaseRestController {
+public class ClientController {
 
     private final ClientService clientService;
 
-    public SlawfirmBaseRestController(ClientService clientService) {
+    public ClientController(ClientService clientService) {
         this.clientService = clientService;
     }
 
