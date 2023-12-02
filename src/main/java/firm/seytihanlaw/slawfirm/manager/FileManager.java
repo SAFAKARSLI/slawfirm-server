@@ -1,8 +1,7 @@
-package firm.seytihanlaw.slawfirm.util;
+package firm.seytihanlaw.slawfirm.manager;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
@@ -11,8 +10,7 @@ import org.springframework.stereotype.Component;
 @Getter
 @Setter
 @Component
-@Slf4j
-public class GenericFileManager {
+public class FileManager {
 
     @Value("classpath:static/Generic Written Plea.docx")
     private Resource plea;

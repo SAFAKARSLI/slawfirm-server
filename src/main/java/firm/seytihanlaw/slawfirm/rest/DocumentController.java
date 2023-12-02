@@ -2,13 +2,11 @@ package firm.seytihanlaw.slawfirm.rest;
 
 import firm.seytihanlaw.slawfirm.model.dto.DocumentDto;
 import firm.seytihanlaw.slawfirm.services.DocumentService;
-import firm.seytihanlaw.slawfirm.util.GenericFileManager;
-import lombok.NoArgsConstructor;
+import firm.seytihanlaw.slawfirm.manager.FileManager;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -31,10 +29,10 @@ import java.util.UUID;
 @RequestMapping("/documents")
 public class DocumentController {
 
-    private final GenericFileManager fileManager;
+    private final FileManager fileManager;
     private final DocumentService documentService;
 
-    public DocumentController(GenericFileManager fileLoader, DocumentService documentService) {
+    public DocumentController(FileManager fileLoader, DocumentService documentService) {
         this.fileManager = fileLoader;
         this.documentService = documentService;
     }
