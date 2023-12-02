@@ -25,7 +25,7 @@ public class NtaInfo {
 
     private String ntaDate;
 
-    @OneToOne (mappedBy = "ntaInfo", targetEntity = Client.class, cascade=CascadeType.ALL)
+    @OneToOne (mappedBy = "ntaInfo", cascade={CascadeType.PERSIST, CascadeType.REFRESH})
     private Client client;
 
 }

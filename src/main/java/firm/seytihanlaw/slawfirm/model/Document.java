@@ -18,13 +18,13 @@ import java.util.UUID;
 public class Document {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+//    @GeneratedValue(strategy = GenerationType.UUID)
     @JdbcTypeCode(Types.VARCHAR)
     private UUID id;
 
-    private String fileName;
+    private String name;
 
     @Column(length = 999999)
-    private byte[] fileContent;
+    private byte[] content;
 
 }

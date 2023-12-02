@@ -48,7 +48,6 @@ public class ClientServiceImpl implements ClientService{
     public ClientDto findClientById(UUID client_id) {
 
         Optional<Client> clientFromRepo = clientRepository.findById(client_id);
-        log.info(clientFromRepo.toString());
         if (!clientFromRepo.isPresent()) {
             throw new RuntimeException("Client not found with id: " + client_id);
         }
@@ -60,10 +59,10 @@ public class ClientServiceImpl implements ClientService{
     public ClientDto saveClient(ClientDto client) {
 
         Optional<Client> clientFromRepo = clientRepository.findById(client.getId());
-        ClientDto savedClientResponseModel;
+        ClientDto savedClientResponseModel = client;
         if (clientFromRepo.isPresent()) {
-            modelMapper.map(client, clientFromRepo);
-            return modelMapper.map(clientRepository.save(clientFromRepo.get()), ClientDto.class);
+
+            clientRepository.save(modelMapper.map(client, Client.class));
 
         } else {
             Client newClient = new Client();
@@ -83,11 +82,11 @@ public class ClientServiceImpl implements ClientService{
 
     @Override
     public void findAndUpdateClient(UUID client_id, ClientDto updateClientInfo) {
+
         ClientDto clientFromRepo = findClientById(client_id);
-        log.info(String.valueOf(clientFromRepo.getId()));
         modelMapper.map(updateClientInfo, clientFromRepo);
-        log.info(clientFromRepo.toString());
         saveClient(clientFromRepo);
+
     }
 
     @Override

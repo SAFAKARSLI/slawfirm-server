@@ -7,6 +7,7 @@ import lombok.*;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -14,7 +15,11 @@ import java.util.Map;
 @NoArgsConstructor
 public class DocumentDto {
 
-    private String file_id;
+    private UUID id;
+
+    private String name;
+
+    private byte[] content;
 
     private Map<String, String> generics = new LinkedHashMap<>();
 

@@ -15,6 +15,7 @@ import java.util.UUID;
 @Slf4j
 @RestController
 @RequestMapping("clients")
+@CrossOrigin(origins = "http://localhost:8080/clients")
 public class ClientController {
 
     private final ClientService clientService;

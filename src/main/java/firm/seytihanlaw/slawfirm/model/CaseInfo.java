@@ -23,7 +23,7 @@ public class CaseInfo {
     private String hearingDate;
     private String courtName;
 
-    @OneToOne(mappedBy = "caseInfo", cascade=CascadeType.ALL)
+    @OneToOne(mappedBy = "caseInfo", cascade={CascadeType.PERSIST, CascadeType.REFRESH})
     private Client client;
 
 }

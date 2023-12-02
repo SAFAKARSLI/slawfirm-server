@@ -25,11 +25,25 @@ public class GenericDocumentBootstrapLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
+        Document genericRetainerAgreement = Document.builder()
+                .id(UUID.fromString("62ae3b52-8ff0-11ee-b9d1-0242ac120002"))
+                .name(fileManager.getAgreement().getFile().getName())
+                .content(IOUtils.toByteArray(new FileInputStream(fileManager.getAgreement().getFile()))).build();
+        documentRepository.save(genericRetainerAgreement);
+
         Document genericWrittenPlea = Document.builder()
                 .id(UUID.fromString("233f7654-89b3-11ee-b9d1-0242ac120002"))
-                .fileName(fileManager.getPlea().getFile().getName())
-                .fileContent(IOUtils.toByteArray(new FileInputStream(fileManager.getPlea().getFile()))).build();
+                .name(fileManager.getPlea().getFile().getName())
+                .content(IOUtils.toByteArray(new FileInputStream(fileManager.getPlea().getFile()))).build();
         documentRepository.save(genericWrittenPlea);
 
+
+
+
     }
+
+
+
+
+
 }

@@ -22,6 +22,9 @@ public class GenericFileManager {
 
     @Value("classpath:static/Generic Motion to Change Venue.docx")
     private Resource cov;
+
+    @Value("classpath:static/Generic_G28_Document.pdf")
+    private Resource g28;
     
 
 }

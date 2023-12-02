@@ -1,5 +1,6 @@
 package firm.seytihanlaw.slawfirm.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import firm.seytihanlaw.slawfirm.types.ATTORNEY;
 import firm.seytihanlaw.slawfirm.types.GENDER;
 import jakarta.persistence.*;
@@ -40,11 +41,11 @@ public class Client {
 
     private String email;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "nta_id", referencedColumnName = "ntaId")
     private NtaInfo ntaInfo;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "case_id", referencedColumnName = "caseId")
     private CaseInfo caseInfo;
 
