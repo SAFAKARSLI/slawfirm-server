@@ -4,7 +4,6 @@ import firm.seytihanlaw.slawfirm.model.Document;
 import firm.seytihanlaw.slawfirm.model.dto.DocumentDto;
 import firm.seytihanlaw.slawfirm.repo.DocumentRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
 import org.apache.poi.xwpf.usermodel.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -72,7 +71,7 @@ public class DocumentServiceImpl implements DocumentService {
                             }
 
                             r.setBold(segmentRuns.get(0).isBold());
-                            r.setFontSize(segmentRuns.get(0).getFontSizeAsDouble());
+                            r.setFontSize(segmentRuns.get(0).getFontSize());
                             r.setCapitalized(segmentRuns.get(0).isCapitalized());
                             r.setFontFamily(segmentRuns.get(0).getFontFamily());
 
@@ -84,15 +83,13 @@ public class DocumentServiceImpl implements DocumentService {
                 }
             }
             try {
-                File outputFile = new File("src/main/resources/output/"+ LocalDate.now()+".docx");
-                docx.write(new FileOutputStream(outputFile));
-                byte[] content = IOUtils.toByteArray(new FileInputStream(outputFile));
-                return outputFile;
+                File outputFileDocx = new File("src/main/resources/output/"+ LocalDate.now()+".docx");
+                docx.write(new FileOutputStream(outputFileDocx));
+                return outputFileDocx;
 
             } catch (IOException e) {
                 throw new RuntimeException("An error occurred during the generation of the document.");
             }
-
         } else {
             throw new RuntimeException("Specified document (UUID: "+ fileId +") could not be found.");
         }

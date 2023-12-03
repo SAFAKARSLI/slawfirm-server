@@ -1,12 +1,8 @@
 package firm.seytihanlaw.slawfirm.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import firm.seytihanlaw.slawfirm.types.ATTORNEY;
-import firm.seytihanlaw.slawfirm.types.GENDER;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -16,6 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name="client")
 @Builder
 public class Client {
 
@@ -28,39 +25,12 @@ public class Client {
 
     private String alienNumber;
 
-    private GENDER gender;
-
-    private Integer payment;
-
-    private Integer balance;
-
-    @Enumerated(EnumType.STRING)
-    private ATTORNEY responsible;
-
-    private String phoneNumber;
-
-    private String email;
-
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "nta_id", referencedColumnName = "ntaId")
-    private NtaInfo ntaInfo;
-
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "case_id", referencedColumnName = "caseId")
-    private CaseInfo caseInfo;
-
     @Override
     public String toString() {
         return "Client{" +
                 "id=" + id +
                 ", fullName='" + fullName + '\'' +
                 ", alienNumber='" + alienNumber + '\'' +
-                ", gender=" + gender +
-                ", payment=" + payment +
-                ", balance=" + balance +
-                ", responsible=" + responsible +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", email='" + email + '\'' +
                 '}';
     }
 

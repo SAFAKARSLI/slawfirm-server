@@ -5,13 +5,17 @@ import com.google.api.client.googleapis.batch.json.JsonBatchCallback;
 import com.google.api.client.googleapis.json.GoogleJsonError;
 import com.google.api.client.http.FileContent;
 import com.google.api.client.http.HttpHeaders;
+import com.google.api.client.http.InputStreamContent;
+import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.Permission;
 import firm.seytihanlaw.slawfirm.manager.GoogleCloudManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +42,9 @@ public class GoogleCloudServiceImpl implements GoogleCloudService{
 
         return "https://docs.google.com/document/d/" + uploadedFile.getId();
     }
+
+
+
 
     @Override
     public void updatePermission(String fileId, String type, String role) throws IOException {
@@ -71,4 +78,5 @@ public class GoogleCloudServiceImpl implements GoogleCloudService{
 
         batch.execute();
     }
+
 }

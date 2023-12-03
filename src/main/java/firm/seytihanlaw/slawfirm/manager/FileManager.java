@@ -23,6 +23,9 @@ public class FileManager {
 
     @Value("classpath:static/Generic_G28_Document.pdf")
     private Resource g28;
+
+    @Value("classpath:static/Slawfirm_Defensive_Clients.xlsx")
+    private Resource defensiveClients;
     
 
 }

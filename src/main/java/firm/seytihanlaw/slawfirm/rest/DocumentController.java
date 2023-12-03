@@ -7,10 +7,8 @@ import firm.seytihanlaw.slawfirm.services.DocumentService;
 import firm.seytihanlaw.slawfirm.manager.FileManager;
 import firm.seytihanlaw.slawfirm.services.GoogleCloudService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +22,9 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -66,8 +67,9 @@ public class DocumentController {
                                                    @RequestBody DocumentDto documentRequestModel) throws IOException {
         File generatedDocument = documentService.handleMotionGenerics(documentRequestModel.getGenerics(), document_id);
 
-        byte[] content = IOUtils.toByteArray(
-                new FileInputStream(generatedDocument));
+
+
+        byte[] content = null;
 
         String uploadFileUrl =
                 cloudService.createDocument(generatedDocument, documentRequestModel.getGenerics().get("document_name"));

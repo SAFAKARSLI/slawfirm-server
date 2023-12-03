@@ -19,6 +19,10 @@ target/
 *.iml
 *.ipr
 
+src/main/resources/static/**
+src/main/resources/output
+src/main/resources/tokens
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/

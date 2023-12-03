@@ -1,13 +1,9 @@
 package firm.seytihanlaw.slawfirm.services;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import firm.seytihanlaw.slawfirm.model.Client;
 import firm.seytihanlaw.slawfirm.model.dto.ClientDto;
-import firm.seytihanlaw.slawfirm.repo.CaseRepository;
 import firm.seytihanlaw.slawfirm.repo.ClientRepository;
-import firm.seytihanlaw.slawfirm.repo.NtaRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -22,14 +18,11 @@ import java.util.stream.Collectors;
 public class ClientServiceImpl implements ClientService{
 
     private final ClientRepository clientRepository;
-    private final CaseRepository caseRepository;
-    private final NtaRepository ntaRepository;
     private final ModelMapper modelMapper;
 
-    public ClientServiceImpl(ClientRepository clientRepository, CaseRepository caseRepository, NtaRepository ntaRepository, ModelMapper mapper) {
+    public ClientServiceImpl(ClientRepository clientRepository, ModelMapper mapper) {
         this.clientRepository = clientRepository;
-        this.caseRepository = caseRepository;
-        this.ntaRepository = ntaRepository;
+
         this.modelMapper = mapper;
 
     }
