@@ -4,9 +4,10 @@ import firm.seytihanlaw.slawfirm.model.Document;
 import firm.seytihanlaw.slawfirm.model.dto.DocumentDto;
 import firm.seytihanlaw.slawfirm.repo.DocumentRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.apache.poi.xwpf.usermodel.*;
 import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -14,7 +15,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
-@Component
+@Service
 public class DocumentServiceImpl implements DocumentService {
 
     private final DocumentRepository documentRepository;
@@ -84,8 +85,8 @@ public class DocumentServiceImpl implements DocumentService {
             }
             try {
                 File outputFile = new File("src/main/resources/output/"+ LocalDate.now()+".docx");
-                outputFile.setWritable(true);
                 docx.write(new FileOutputStream(outputFile));
+                byte[] content = IOUtils.toByteArray(new FileInputStream(outputFile));
                 return outputFile;
 
             } catch (IOException e) {

@@ -1,12 +1,16 @@
 package firm.seytihanlaw.slawfirm.rest;
 
+import com.google.api.services.drive.model.Permission;
+import firm.seytihanlaw.slawfirm.manager.GoogleCloudManager;
 import firm.seytihanlaw.slawfirm.model.dto.DocumentDto;
 import firm.seytihanlaw.slawfirm.services.DocumentService;
 import firm.seytihanlaw.slawfirm.manager.FileManager;
+import firm.seytihanlaw.slawfirm.services.GoogleCloudService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -31,10 +35,15 @@ public class DocumentController {
 
     private final FileManager fileManager;
     private final DocumentService documentService;
+    private final GoogleCloudService cloudService;
 
-    public DocumentController(FileManager fileLoader, DocumentService documentService) {
+    private final GoogleCloudManager cloudManager;
+
+    public DocumentController(FileManager fileLoader, DocumentService documentService, GoogleCloudService cloudService, GoogleCloudManager cloudManager) {
         this.fileManager = fileLoader;
         this.documentService = documentService;
+        this.cloudService = cloudService;
+        this.cloudManager = cloudManager;
     }
 
 
@@ -52,12 +61,22 @@ public class DocumentController {
 
     }
 
-    @PostMapping(value = "/{document_id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-    public @ResponseBody byte[] handleGenerate(@PathVariable("document_id") UUID document_id,
-                                               @RequestBody DocumentDto documentRequestModel) throws IOException {
+    @PostMapping(value = "/{document_id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json")
+    public ResponseEntity<DocumentDto> handleGenerate(@PathVariable("document_id") UUID document_id,
+                                                   @RequestBody DocumentDto documentRequestModel) throws IOException {
+        File generatedDocument = documentService.handleMotionGenerics(documentRequestModel.getGenerics(), document_id);
 
-        return IOUtils.toByteArray(
-                new FileInputStream(documentService.handleMotionGenerics(documentRequestModel.getGenerics(), document_id)));
+        byte[] content = IOUtils.toByteArray(
+                new FileInputStream(generatedDocument));
+
+        String uploadFileUrl =
+                cloudService.createDocument(generatedDocument, documentRequestModel.getGenerics().get("document_name"));
+
+        DocumentDto body = DocumentDto.builder()
+             .content(content)
+             .cloudUrl(uploadFileUrl).build();
+
+        return new ResponseEntity<>(body, HttpStatus.OK);
 
     }
 

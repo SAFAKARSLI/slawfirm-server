@@ -12,12 +12,15 @@ import java.util.UUID;
 @Data
 @Builder
 @AllArgsConstructor
+@ToString
 @NoArgsConstructor
 public class DocumentDto {
 
     private UUID id;
 
     private String name;
+
+    private String cloudUrl;
 
     private byte[] content;
 
