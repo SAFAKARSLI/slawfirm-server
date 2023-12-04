@@ -5,12 +5,10 @@ import firm.seytihanlaw.slawfirm.model.dto.ClientDto;
 import firm.seytihanlaw.slawfirm.repo.ClientRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -28,13 +26,12 @@ public class ClientServiceImpl implements ClientService{
     }
 
     @Override
-    public Set<ClientDto> getClients() {
+    public List<ClientDto> getClients() {
         log.info(String.valueOf(clientRepository.count()));
-        Set<Client> clientSet = new HashSet<>();
-        clientRepository.findAll().iterator().forEachRemaining(clientSet::add);
+        List<Client> clientList = new ArrayList<>();
+        clientRepository.findAll(Sort.by("serialId")).iterator().forEachRemaining(clientList::add);
         // Returning the Set of ClientDto for not exposing the entity.
-        return clientSet.stream().map(e -> modelMapper.map(e, ClientDto.class)).collect(Collectors.toSet());
-
+        return clientList.stream().map(e -> modelMapper.map(e, ClientDto.class)).collect(Collectors.toList());
     }
 
     @Override
@@ -50,46 +47,16 @@ public class ClientServiceImpl implements ClientService{
 
     @Override
     public ClientDto saveClient(ClientDto client) {
-
-        Optional<Client> clientFromRepo = clientRepository.findById(client.getId());
-        ClientDto savedClientResponseModel = client;
-        if (clientFromRepo.isPresent()) {
-
-            clientRepository.save(modelMapper.map(client, Client.class));
-
-        } else {
-            Client newClient = new Client();
-            modelMapper.map(client, newClient);
-            newClient = clientRepository.save(newClient);
-
-            savedClientResponseModel = ClientDto.builder()
-                    .id(newClient.getId())
-                    .fullName(newClient.getFullName())
-                    .alienNumber(newClient.getAlienNumber())
-                    .build();
-        }
-
-        return savedClientResponseModel;
-
+        client.setSerialId(clientRepository.count());
+        Client newClient = new Client();
+        modelMapper.map(client, newClient);
+        newClient = clientRepository.save(newClient);
+        return modelMapper.map(newClient, ClientDto.class);
     }
 
     @Override
-    public void findAndUpdateClient(UUID client_id, ClientDto updateClientInfo) {
+    public void deleteClient(UUID clientId) {
 
-        ClientDto clientFromRepo = findClientById(client_id);
-        modelMapper.map(updateClientInfo, clientFromRepo);
-        saveClient(clientFromRepo);
-
-    }
-
-    @Override
-    public void updateNtaInfo(UUID client_id, UUID nta_id) {
-
-
-    }
-
-    @Override
-    public void updateCaseInfo(UUID client_id, UUID case_id) {
-
+        clientRepository.deleteById(clientId);
     }
 }

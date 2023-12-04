@@ -16,10 +16,13 @@ import java.util.UUID;
 @Builder
 public class Client {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(unique = true)
     private UUID id;
+
+    private Long serialId;
 
     private String fullName;
 

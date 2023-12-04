@@ -17,6 +17,7 @@ import java.util.UUID;
 public class ClientDto {
 
     private UUID id;
+    private Long serialId;
     private String fullName;
     private String alienNumber;
 

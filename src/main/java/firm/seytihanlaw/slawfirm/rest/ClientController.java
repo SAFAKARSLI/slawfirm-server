@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -25,29 +26,27 @@ public class ClientController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Set<ClientDto>> getClients() throws IOException {
+    public ResponseEntity<List<ClientDto>> getClients() throws IOException {
         return ResponseEntity.ok(clientService.getClients());
     }
 
 
 
-    @GetMapping(value="/{client_id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ClientDto> getClient(@PathVariable("client_id") UUID client_id) {
-        return new ResponseEntity<>(clientService.findClientById(client_id), HttpStatus.OK);
+    @GetMapping(value="/{clientId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ClientDto> getClient(@PathVariable("clientId") UUID clientId) {
+        return new ResponseEntity<>(clientService.findClientById(clientId), HttpStatus.OK);
     }
 
 
     @PostMapping
     public ResponseEntity<ClientDto> createClient(@RequestBody ClientDto client) {
-        client.setId(UUID.randomUUID());
         ClientDto client_return = clientService.saveClient(client);
         return new ResponseEntity<>(client_return, HttpStatus.CREATED);
     }
 
-
-    @PutMapping(value="/{client_id}")
-    public ResponseEntity updateClient(@RequestBody ClientDto updateClient, @PathVariable("client_id") UUID client_id) {
-        clientService.findAndUpdateClient(client_id, updateClient);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @DeleteMapping(value = "/{clientId}")
+    public HttpStatus deleteClient(@PathVariable UUID clientId) {
+        clientService.deleteClient(clientId);
+        return HttpStatus.NO_CONTENT;
     }
 }

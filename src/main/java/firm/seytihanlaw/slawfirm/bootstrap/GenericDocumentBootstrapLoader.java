@@ -12,7 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.UUID;
 
-//@Component
+@Component
 public class GenericDocumentBootstrapLoader implements CommandLineRunner {
 
     private final FileManager fileManager;
@@ -29,14 +29,12 @@ public class GenericDocumentBootstrapLoader implements CommandLineRunner {
 
         File retainer = fileManager.getAgreement().getFile();
         Document genericRetainerAgreement = Document.builder()
-                .id(UUID.fromString("62ae3b52-8ff0-11ee-b9d1-0242ac120002"))
                 .name(fileManager.getAgreement().getFile().getName())
                 .content(Files.readAllBytes(Paths.get(retainer.toURI()))).build();
         documentRepository.save(genericRetainerAgreement);
 
         File plea = fileManager.getPlea().getFile();
         Document genericWrittenPlea = Document.builder()
-                .id(UUID.fromString("233f7654-89b3-11ee-b9d1-0242ac120002"))
                 .name(plea.getName())
                 .content(Files.readAllBytes(Paths.get(plea.toURI()))).build();
         documentRepository.save(genericWrittenPlea);

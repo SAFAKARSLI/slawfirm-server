@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.io.FileInputStream;
 import java.util.Iterator;
 
-//@Component
+@Component
 public class DefensiveClientBootstrapLoader implements CommandLineRunner {
 
     private final ClientRepository clientRepository;
@@ -33,11 +33,12 @@ public class DefensiveClientBootstrapLoader implements CommandLineRunner {
         XSSFWorkbook wb = new XSSFWorkbook(file);
         XSSFSheet ws = wb.getSheetAt(0);
 
-        for(int i = 1; i< ws.getLastRowNum(); i++) {
+        for(int i = 1; i<= ws.getLastRowNum(); i++) {
 
             Row row = ws.getRow(i);
 
             Client client = Client.builder()
+                    .serialId(clientRepository.count())
                     .fullName(String.valueOf(row.getCell(0)))
                     .alienNumber(String.valueOf(row.getCell(1)))
                     .build();
