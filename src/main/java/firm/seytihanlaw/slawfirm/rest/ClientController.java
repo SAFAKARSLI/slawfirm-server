@@ -31,7 +31,6 @@ public class ClientController {
     }
 
 
-
     @GetMapping(value="/{clientId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ClientDto> getClient(@PathVariable("clientId") UUID clientId) {
         return new ResponseEntity<>(clientService.findClientById(clientId), HttpStatus.OK);
