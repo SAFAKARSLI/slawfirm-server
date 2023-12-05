@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.io.FileInputStream;
 import java.util.Iterator;
 
-@Component
+//@Component
 public class DefensiveClientBootstrapLoader implements CommandLineRunner {
 
     private final ClientRepository clientRepository;
