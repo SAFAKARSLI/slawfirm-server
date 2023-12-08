@@ -13,6 +13,7 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.docs.v1.Docs;
 import com.google.api.services.docs.v1.DocsScopes;
 import com.google.api.services.drive.Drive;
+import com.google.api.services.sheets.v4.Sheets;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -92,19 +93,13 @@ public class GoogleCloudManager{
                 .setApplicationName(APPLICATION_NAME)
                 .build();
 
-
-
-//        File newFile = fileManager.getPlea().getFile();
-//        com.google.api.services.drive.model.File fileMetadata = new com.google.api.services.drive.model.File();
-//        fileMetadata.setName(newFile.getName());
-//        driverService.files().create(
-//                fileMetadata,
-//                new FileContent("application/vnd.openxmlformats-officedocument.wordprocessingml.document", newFile))
-//                .setFields("id").execute();
-
     }
 
-
+    public Sheets getGSheetsService() throws IOException {
+        return new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+                .setApplicationName(APPLICATION_NAME)
+                .build();
+    }
 
     public Drive getGDriveService() throws IOException {
         return new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))

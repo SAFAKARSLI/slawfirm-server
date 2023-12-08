@@ -8,10 +8,13 @@ import java.util.UUID;
 
 public interface ClientService {
 
-    List<ClientDto> getClients();
+    List<ClientDto> getClients(int pageNum, int pageSize);
     ClientDto findClientById(UUID client_id);
     ClientDto saveClient(ClientDto client);
+    void saveClients(List<ClientDto> clients);
     void deleteClient(UUID clientId);
+
+    List<ClientDto> findClientsByName(String name);
 
 
 }

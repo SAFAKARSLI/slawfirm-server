@@ -16,7 +16,6 @@ import java.util.UUID;
 @Slf4j
 @RestController
 @RequestMapping("clients")
-@CrossOrigin(origins = "http://localhost:8080/clients")
 public class ClientController {
 
     private final ClientService clientService;
@@ -26,14 +25,19 @@ public class ClientController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<ClientDto>> getClients() throws IOException {
-        return ResponseEntity.ok(clientService.getClients());
+    public ResponseEntity<List<ClientDto>> getClients(@RequestParam int pageNum, @RequestParam int pageSize) throws IOException {
+        return ResponseEntity.ok(clientService.getClients(pageNum, pageSize));
     }
 
 
     @GetMapping(value="/{clientId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ClientDto> getClient(@PathVariable("clientId") UUID clientId) {
         return new ResponseEntity<>(clientService.findClientById(clientId), HttpStatus.OK);
+    }
+
+    @GetMapping(params = {"name"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ClientDto>> findClient(String name) {
+        return new ResponseEntity<>(clientService.findClientsByName(name), HttpStatus.OK);
     }
 
 

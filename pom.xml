@@ -122,6 +122,14 @@
 			<version>v1-rev20210707-1.32.1</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/com.google.apis/google-api-services-sheets -->
+		<dependency>
+			<groupId>com.google.apis</groupId>
+			<artifactId>google-api-services-sheets</artifactId>
+			<version>v4-rev612-1.25.0</version>
+		</dependency>
+
+
 		<!-- https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox -->
 		<dependency>
 			<groupId>org.apache.pdfbox</groupId>

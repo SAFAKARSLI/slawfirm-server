@@ -6,6 +6,7 @@ import firm.seytihanlaw.slawfirm.repo.DocumentRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.xwpf.usermodel.*;
 import org.modelmapper.ModelMapper;
+import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTFonts;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -42,7 +43,7 @@ public class DocumentServiceImpl implements DocumentService {
                 p = paragraph_itr.next();
                 if (isAnyReplaceable(generics.keySet().stream().toList(), p)) {
 
-                    // Replace "generics" (e.g, {COURT_NAME}) with "replaceTexts"
+                    // Replace "generic" (e.g, {COURT_NAME}) with "replaceText"
                     for (String generic : generics.keySet()) {
 
                         String formatted_generic = "{"+generic.toUpperCase()+"}";
@@ -62,6 +63,7 @@ public class DocumentServiceImpl implements DocumentService {
                                 String[] lines = replaceText.split("\n");
                                 for (String line : lines) {
                                     r.setText(line);
+                                    r.setFontFamily(segmentRuns.get(0).getFontFamily());
                                     r.addBreak();
                                     r = p.insertNewRun(p.getRuns().indexOf(r) + 1);
                                 };
@@ -72,7 +74,6 @@ public class DocumentServiceImpl implements DocumentService {
 
                             r.setBold(segmentRuns.get(0).isBold());
                             r.setFontSize(segmentRuns.get(0).getFontSize());
-                            r.setCapitalized(segmentRuns.get(0).isCapitalized());
                             r.setFontFamily(segmentRuns.get(0).getFontFamily());
 
                             for (int i = 0; i < segmentRuns.size(); i++) {

@@ -5,6 +5,9 @@ import firm.seytihanlaw.slawfirm.model.dto.ClientDto;
 import firm.seytihanlaw.slawfirm.repo.ClientRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -26,12 +29,15 @@ public class ClientServiceImpl implements ClientService{
     }
 
     @Override
-    public List<ClientDto> getClients() {
-        log.info(String.valueOf(clientRepository.count()));
+    public List<ClientDto> getClients(int pageNum, int pageSize) {
         List<Client> clientList = new ArrayList<>();
+
+//        Pageable pageRequest = PageRequest.of(pageNum, pageSize, Sort.by("serialId"));
+
         clientRepository.findAll(Sort.by("serialId")).iterator().forEachRemaining(clientList::add);
-        // Returning the Set of ClientDto for not exposing the entity.
+        // Returning the list of ClientDto for not exposing the entity.
         return clientList.stream().map(e -> modelMapper.map(e, ClientDto.class)).collect(Collectors.toList());
+
     }
 
     @Override
@@ -46,6 +52,12 @@ public class ClientServiceImpl implements ClientService{
     }
 
     @Override
+    public List<ClientDto> findClientsByName(String name) {
+        List<Client> matchedClients = clientRepository.findByFullNameStartingWithIgnoreCase(name);
+        return matchedClients.stream().map(e -> modelMapper.map(e, ClientDto.class)).collect(Collectors.toList());
+    }
+
+    @Override
     public ClientDto saveClient(ClientDto client) {
         client.setSerialId(clientRepository.count());
         Client newClient = new Client();
@@ -55,8 +67,17 @@ public class ClientServiceImpl implements ClientService{
     }
 
     @Override
+    public void saveClients(List<ClientDto> clients) {
+        for (ClientDto client : clients)  {
+            saveClient(client);
+        }
+    }
+
+    @Override
     public void deleteClient(UUID clientId) {
 
         clientRepository.deleteById(clientId);
     }
+
+
 }

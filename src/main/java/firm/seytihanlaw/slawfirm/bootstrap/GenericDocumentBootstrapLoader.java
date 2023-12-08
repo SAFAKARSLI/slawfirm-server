@@ -1,31 +1,37 @@
 package firm.seytihanlaw.slawfirm.bootstrap;
 
+import firm.seytihanlaw.slawfirm.manager.GoogleCloudManager;
 import firm.seytihanlaw.slawfirm.model.Document;
 import firm.seytihanlaw.slawfirm.repo.DocumentRepository;
 import firm.seytihanlaw.slawfirm.manager.FileManager;
+import firm.seytihanlaw.slawfirm.services.GoogleCloudService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.UUID;
 
-//@Component
+@Component
 public class GenericDocumentBootstrapLoader implements CommandLineRunner {
 
     private final FileManager fileManager;
+
+    private final GoogleCloudService cloudService;
     private final DocumentRepository documentRepository;
 
 
-    public GenericDocumentBootstrapLoader(FileManager fileManager, DocumentRepository documentRepository) {
+    public GenericDocumentBootstrapLoader(FileManager fileManager, GoogleCloudService cloudService, DocumentRepository documentRepository) {
         this.fileManager = fileManager;
+        this.cloudService = cloudService;
         this.documentRepository = documentRepository;
     }
 
     @Override
     public void run(String... args) throws Exception {
+
+        cloudService.readDefensiveClients();
 
         File retainer = fileManager.getAgreement().getFile();
         Document genericRetainerAgreement = Document.builder()
@@ -33,15 +39,6 @@ public class GenericDocumentBootstrapLoader implements CommandLineRunner {
                 .name(fileManager.getAgreement().getFile().getName())
                 .content(Files.readAllBytes(Paths.get(retainer.toURI()))).build();
         documentRepository.save(genericRetainerAgreement);
-
-//        File plea = fileManager.getPlea().getFile();
-//        Document genericWrittenPlea = Document.builder()
-//                .name(plea.getName())
-//                .content(Files.readAllBytes(Paths.get(plea.toURI()))).build();
-//        documentRepository.save(genericWrittenPlea);
-
-
-
 
     }
 
